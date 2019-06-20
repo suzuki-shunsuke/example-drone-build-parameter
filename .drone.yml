@@ -1,0 +1,17 @@
+---
+kind: pipeline
+name: default
+steps:
+- name: deploy
+  pull: default
+  image: alpine:3.9.4
+  commands:
+  # read build parameters
+  - . build_params/${DRONE_TAG##deploy/}/params.sh
+  # deploy
+  - echo $TARGET
+  when:
+    event:
+    - tag
+    ref:
+    - refs/tags/deploy/*
